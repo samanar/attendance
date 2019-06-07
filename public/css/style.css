@@ -1,0 +1,50 @@
+@font-face {
+    font-family:'BYekan';
+    src:url('../fonts/Yekan.eot');
+    src:local('bYekan'),
+        url('../fonts/Yekan.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Yekan.woff') format('woff'),
+        url('../fonts/Yekan.ttf') format('truetype'),
+        url('../fonts/Yekan.svg#BYekan') format('svg');
+    font-style:normal;
+    font-weight:normal;
+}
+
+html {
+    font-family: 'BYekan'
+}
+
+.home_text_info {
+    direction: rtl;
+    font-size: 1.4em;
+    padding: 5px;
+}
+
+td, th {
+    text-align: center !important;
+}
+
+.rtl {
+    direction: rtl !important;
+}
+
+.attendance_check_card_text {
+    font-size: 1.3em;
+    margin-top: 10px;
+}
+
+html {
+    font-size: 1.1em;
+}
+
+.uk-button {
+    font-size: 1.0em;
+}
+
+th {
+    font-weight: bold !important;
+}
+
+.uk-form-label {
+    font-size: 0.9em !important;
+}
