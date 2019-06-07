@@ -12,7 +12,7 @@ use Log;
 use DB;
 use Session;
 use GuzzleHttp\Exception\TransferException;
-
+use Illuminate\Support\Arr;
 
 class ExamController extends Controller
 {
@@ -199,6 +199,7 @@ class ExamController extends Controller
         $exam->teacher_signed = true;
         $exam->status = true;
         $exam->save();
+        $this->send_data($exam);
         return redirect()->route('exams');
     }
 
@@ -210,6 +211,7 @@ class ExamController extends Controller
         $exam->signer_id = $request->signer_id;
         $exam->status = true;
         $exam->save();
+        $this->send_data($exam);
         return redirect()->route('exams');
     }
     public function report(Request $request, $exam_id)
@@ -224,7 +226,21 @@ class ExamController extends Controller
             ->with('students', $students);
     }
 
-    private function send_data($exam_id) {
-        
+    private function send_data($exam)
+    {
+        $students = $exam->students()->where('status', 1)->get();
+        $student_ids = Arr::pluck($students, 'id');
+        $student_ids = (array_values($student_ids));
+        $is_teacher_signed = json_encode($exam->teacher_signed ? true : false);
+        // dd($student_ids);
+        $client = new Client();
+        $response = $client->post('http://142.93.134.194:8088/api/attendance', [
+            \GuzzleHttp\RequestOptions::JSON => [
+                'exam_id' => $exam->id,
+                'is_teacher_signed' => $is_teacher_signed,
+                'present_students_list' => $student_ids
+            ]
+        ]);
+        // dd($response->getBody());
     }
 }
